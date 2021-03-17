@@ -11,9 +11,19 @@
   <h1>Liste des films : </h1>
 
   {{#each movies}}
-    <h3>{{title}}</h3>
-    <img src="https://www.themoviedb.org/t/p/w440_and_h660_face{{poster_path}}"> 
-    <li>{{overview}}</li>
+  <div class="container">
+
+    <div id="container2" class="col-3">
+      <img class="movies" src="https://www.themoviedb.org/t/p/w440_and_h660_face{{poster_path}}">
+    </div>
+
+    <div id="right" class="col-9">
+      <h3 class="title">{{title}}</h3>
+      <li class="overview">{{overview}}</li>
+    </div>
+
+  </div>
+    
   {{/each }}
 
 </template>

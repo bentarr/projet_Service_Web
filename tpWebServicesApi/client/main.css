@@ -2,3 +2,35 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+.container{
+  display: flex;
+}
+
+.movies{
+  border-radius: 10px;
+  -webkit-transform: scale(0.6);
+	transform: scale(0.6);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+#container2 {
+  position: relative;
+  max-width: 60%;
+}
+
+.container:hover .movies {
+  -webkit-transform: scale(0.9);
+	transform: scale(0.9);
+
+}
+
+.title{
+  margin-top: 10px;
+  justify-content: center;
+  display: flex;
+}
+
+.overview{
+}
