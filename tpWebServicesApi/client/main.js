@@ -21,6 +21,6 @@ Template.home.onCreated(function homeOnCreated() {
 
   Template.home.helpers({
   movies() {
-  return Template.instance().movies.get();
+  return Template.instance().movies.get()
   }
 });
