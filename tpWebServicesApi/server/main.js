@@ -36,13 +36,13 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
     let ressource = Like.findOne({id: idMovie});
     if (ressource) {
       Like.update(
-        {id: idMovie},
-        { $inc: { like1 }}
+        { id: idMovie },
+        { $inc: { like: 1 } }
       );
     }else{
       Like.insert(
         { id: idMovie,
-        like : 1}
+        like: 1}
       );
     }
     return Like.findOne({ id: idMovie});

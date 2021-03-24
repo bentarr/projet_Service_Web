@@ -3,7 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { HTTP } from 'meteor/http'; 
 
 import './main.html';
-import { Http2ServerRequest } from 'node:http2';
 
 Template.home.onCreated(function homeOnCreated() {
   let ctrl = this;
@@ -33,8 +32,9 @@ Template.home.events({
   }
 });
 
+
 function updateLikeMovie(idMovie, movies) {
-Http.call(
+HTTP.call(
   'PUT',
   'http://localhost:3000/api/like/' + idMovie,
   {},
