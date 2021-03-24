@@ -39,9 +39,8 @@ HTTP.call(
   'http://localhost:3000/api/like/' + idMovie,
   {},
   (error, response) => {
-    let index = movies.get().findindex(
+    let index = movies.get().findIndex(
         (item) => { return item.id === JSON.parse(response.content).id; }
-
     );
     let moviesList = movies.get();
     moviesList[index].like = JSON.parse(response.content).like;

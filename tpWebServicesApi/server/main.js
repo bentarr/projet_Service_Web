@@ -2,8 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { SERVER_CONFIG } from './server-config.js';
 import { WebApp } from 'meteor/webapp';
 import { HTTP } from 'meteor/http';
+import {Mongo} from 'meteor/mongo';
 
 Meteor.startup(() => {});
+
+const Like = new Mongo.Collection('like');
+
 
 WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
   let baseurl = SERVER_CONFIG.themoviedb_api_config.base_url;
@@ -15,6 +19,8 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
       'GET', baseurl + 'discover/movie?api_key=' + apikey + '&language=' + language
       ).content
   )
+
+  //Compléter la partie du dessus avec code de Sev : Js.Server
 
   WebApp.connectHandlers.use('/api/like', (req,res, next) => {
     switch(req.method) {
@@ -33,7 +39,7 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
   );
 
   function updateLikeMovie(idMovie) {
-    let ressource = Like.findOne({id: idMovie});
+    let ressource = Like.findOne({ id: idMovie });
     if (ressource) {
       Like.update(
         { id: idMovie },
@@ -45,7 +51,7 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
         like: 1}
       );
     }
-    return Like.findOne({ id: idMovie});
+    return Like.findOne({ id: idMovie });
   }
 
   res.writeHead(200); 
