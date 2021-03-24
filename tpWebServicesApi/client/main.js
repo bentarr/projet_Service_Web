@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { HTTP } from 'meteor/http'; 
 
 import './main.html';
+import { Http2ServerRequest } from 'node:http2';
 
 Template.home.onCreated(function homeOnCreated() {
   let ctrl = this;
@@ -24,3 +25,27 @@ Template.home.onCreated(function homeOnCreated() {
   return Template.instance().movies.get()
   }
 });
+
+Template.home.events({
+  'click button'(event, instance) {
+    const idMovie = event.currentTarget.dataset.id;
+    updateLikeMovie(idMovie, Template.instance().movies);
+  }
+});
+
+function updateLikeMovie(idMovie, movies) {
+Http.call(
+  'PUT',
+  'http://localhost:3000/api/like/' + idMovie,
+  {},
+  (error, response) => {
+    let index = movies.get().findindex(
+        (item) => { return item.id === JSON.parse(response.content).id; }
+
+    );
+    let moviesList = movies.get();
+    moviesList[index].like = JSON.parse(response.content).like;
+    movies.set(moviesList);
+  }
+)
+}

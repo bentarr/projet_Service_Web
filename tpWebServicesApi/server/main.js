@@ -16,6 +16,38 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
       ).content
   )
 
+  WebApp.connectHandlers.use('/api/like', (req,res, next) => {
+    switch(req.method) {
+      case 'GET':
+        break;
+      case 'PUT':
+        let idMovie = req.url.split('/')[1];
+        let newMoviesLikes = updateLikeMovie(parseInt(idMovie));
+        res.writeHead(200);
+        res.end(JSON.stringify(newMoviesLikes));
+        break;
+      default:
+        break;
+    }
+  }
+  );
+
+  function updateLikeMovie(idMovie) {
+    let ressource = Like.findOne({id: idMovie});
+    if (ressource) {
+      Like.update(
+        {id: idMovie},
+        { $inc: { like1 }}
+      );
+    }else{
+      Like.insert(
+        { id: idMovie,
+        like : 1}
+      );
+    }
+    return Like.findOne({ id: idMovie});
+  }
+
   res.writeHead(200); 
   res.end(JSON.stringify(apiJson));
 });
