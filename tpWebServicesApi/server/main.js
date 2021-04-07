@@ -13,13 +13,6 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
   let baseurl = SERVER_CONFIG.themoviedb_api_config.base_url;
   let apikey = SERVER_CONFIG.themoviedb_api_config.api_key;
   let language = SERVER_CONFIG.themoviedb_api_config.language;
-<<<<<<< Updated upstream
-
-  let apiJson = JSON.parse(
-    HTTP.call(
-      'GET', baseurl + 'discover/movie?api_key=' + apikey + '&language=' + language
-      ).content
-=======
   HTTP.call(
     'GET', 
     baseurl + 'discover/movie?api_key=' + apikey + '&language=' + language,
@@ -33,10 +26,9 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
       res.writeHead(200);
       res.end(JSON.stringify(retour))
     }
->>>>>>> Stashed changes
   )
+});
 
-  //Compléter la partie du dessus avec code de Sev : Js.Server
 
   WebApp.connectHandlers.use('/api/like', (req,res, next) => {
     switch(req.method) {
@@ -70,6 +62,3 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
     return Like.findOne({ id: idMovie });
   }
 
-  res.writeHead(200); 
-  res.end(JSON.stringify(apiJson));
-});
