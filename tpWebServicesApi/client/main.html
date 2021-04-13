@@ -9,6 +9,18 @@
 <template name="home">
 
   <h1>Liste des films : </h1>
+  <br>
+  <label>TRIER PAR :</label>
+  <button id="popu">Les mieux notés</button>
+  <form class="genres">
+    <select name="genres" id="genres">
+      {{#each genres}}
+      <option value="{{id}}">{{name}}</option>
+      {{/each }}
+    </select>
+    <input type="submit" value="RECHERCHER">
+  </form>
+
 
   {{#each movies}}
   <div class="container">
@@ -20,7 +32,7 @@
     <div id="right" class="col-9">
       <h3 class="title">{{title}}</h3>
       <li class="overview">{{overview}}</li>
-      <button data-id='{{ id }}'>Like</button>
+      <button id="like" data-id='{{ id }}'>Like</button>
       <p> Nombre de like : {{ like }}</p>
     </div>
   </div>
