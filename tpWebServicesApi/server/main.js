@@ -57,7 +57,7 @@ WebApp.connectHandlers.use('/api/genre/movie/list', (req, res, next) => {
         }
       )
     case 'POST':
-      console.log(req);
+      console.log(req); //TROUVER DANS REQ QUELLE VALEUR RECUPERER
       HTTP.call(
         'POST',
         baseurl + 'genre/movie/list?api_key=' + apikey + '&language=' + language,
