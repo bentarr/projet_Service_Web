@@ -4,8 +4,15 @@ import { HTTP } from 'meteor/http';
 
 import './main.html';
 
+
 const movies = new ReactiveVar();
 const genres = new ReactiveVar();
+var inputSearch = new ReactiveVar();
+var filtreSearch = new ReactiveVar(false);
+var page = new ReactiveVar(1);
+var date = new ReactiveVar();
+var movies = new ReactiveVar();
+
 
 Template.home.onCreated(function homeOnCreated() {
   HTTP.call(
@@ -41,6 +48,7 @@ Template.home.events({
   'click #like'(event, instance) {
     const idMovie = event.currentTarget.dataset.id;
     updateLikeMovie(idMovie, movies);
+
   },
   'click #popu'(event, instance) {
     getMostPopu();
@@ -52,6 +60,35 @@ Template.home.events({
     getMoviesFromGenre(idGenre);
   }
 });
+
+Template.home.helpers({
+  inputValue() { return inputSearch.get(); }
+})
+
+Template.home.events({
+  'input #search'(event) {
+    inputSearch.set(event.target.value);
+    date.set('');
+    if (inputSearch.get() != '') {
+      filtreSearch.set(true);
+      allFilmSearch();
+    } else {
+      allFilms();
+    }
+  }
+})
+
+
+function allFilmSearch() {
+  HTTP.call(
+    'GET',
+    'http://localhost:3000/api/search?input=' + inputSearch.get(),
+    {},
+    (error, response) => { 
+      movies.set(JSON.parse(response.content).results); 
+    }
+  );
+}
 
 
 function updateLikeMovie(idMovie, movies) {
