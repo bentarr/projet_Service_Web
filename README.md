@@ -1,6 +1,6 @@
-# Projet de WebServices
-Rendu de projet sur le module de WebServices 
+# Projet de WebServices [EPSI]
 
+### Rendu de projet sur le module de WebServices 
 ### EPSI B3 DEV GROUPE 2 2021
 ### Pour Mr.Couraud Julien
 
