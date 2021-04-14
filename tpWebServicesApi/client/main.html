@@ -32,6 +32,15 @@
 <template name="home">
 
   <h1>Liste des films : </h1>
+  <br>
+  <label>TRIER PAR :</label>
+  <button id="popu">Les mieux notés</button>
+  <select id="genres" name="genres">
+    {{#each genres}}
+    <option value="{{id}}">{{name}}</option>
+    {{/each }}
+  </select>
+
 
   <div class="container2">
     <h3>Rechercher par titre : </h3>
