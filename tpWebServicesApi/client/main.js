@@ -19,7 +19,7 @@ Template.home.onCreated(function homeOnCreated() {
   );
   HTTP.call(
     'GET',
-    'http://localhost:3000/api/genre/movie/list',
+    'http://localhost:3000/api/genres',
     {},
     (error, response) => {
       genres.set(
@@ -45,9 +45,10 @@ Template.home.events({
   'click #popu'(event, instance) {
     getMostPopu();
   },
-  'submit .genres'(event, instance) {
+  'change #genres'(event, instance) {
     const target = event.target;
-    const idGenre = target.genres.value;
+    const idGenre = target.value;
+    console.log(idGenre);
     getMoviesFromGenre(idGenre);
   }
 });
@@ -81,13 +82,12 @@ function getMostPopu() {
 }
 
 function getMoviesFromGenre(idGenre) {
-  console.log(idGenre);
   HTTP.call(
-    'POST',
-    'http://localhost:3000/api/genre/movie/list',
+    'GET',
+    'http://localhost:3000/api/movie/genre?genre=' + idGenre,
     {},
     (error, response) => {
-      genres.set(
+      movies.set(
         JSON.parse(response.content).results)
     }
   );

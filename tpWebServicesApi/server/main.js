@@ -43,34 +43,35 @@ WebApp.connectHandlers.use('/api/discover/most_popu', (req, res, next) => {
 });
 
 //Route pour récupérer les genres
-WebApp.connectHandlers.use('/api/genre/movie/list', (req, res, next) => {
-  switch (req.method) {
-    case 'GET':
-      HTTP.call(
-        'GET',
-        baseurl + 'genre/movie/list?api_key=' + apikey + '&language=' + language,
-        {},
-        (error, response) => {
-          let retour = response.data;
-          res.writeHead(200);
-          res.end(JSON.stringify(retour))
-        }
-      )
-    case 'POST':
-      console.log(req); //TROUVER DANS REQ QUELLE VALEUR RECUPERER
-      HTTP.call(
-        'POST',
-        baseurl + 'genre/movie/list?api_key=' + apikey + '&language=' + language,
-        {},
-        (error, response) => {
-          let retour = response.data;
-          res.writeHead(200);
-          res.end(JSON.stringify(retour))
-        }
-      )
-    default:
-      break;
-  }
+WebApp.connectHandlers.use('/api/genres', (req, res, next) => {
+  HTTP.call(
+    'GET',
+    baseurl + 'genre/movie/list?api_key=' + apikey + '&language=' + language,
+    {},
+    (error, response) => {
+      let retour = response.data;
+
+      res.writeHead(200);
+      res.end(JSON.stringify(retour))
+    }
+  )
+});
+
+//Liste des films en fonction du genre
+WebApp.connectHandlers.use('/api/movie/genre', (req, res, next) => {
+  let genre = urlSplit(req.originalUrl);
+  let idGenre = genre[0][1];
+  HTTP.call(
+    'GET',
+    baseurl + 'discover/movie?with_genres=' + idGenre + '&api_key=' + apikey + '&language=' + language,
+    {},
+    (error, response) => {
+      let retour = response.data;
+      insertLikeBdd(retour);
+      res.writeHead(200);
+      res.end(JSON.stringify(retour))
+    }
+  )
 });
 
 WebApp.connectHandlers.use('/api/like', (req, res, next) => {
@@ -111,4 +112,13 @@ function insertLikeBdd(retour) {
     let retourReq = Like.findOne({ id: element.id });
     element.like = retourReq ? retourReq.like : 0;
   });
+}
+
+function urlSplit(url) {
+  let urlParams = url.split('?')[1].split('&');
+  let params = [];
+  urlParams.forEach(param => {
+    params.push(param.split('='));
+  });
+  return params;
 }
