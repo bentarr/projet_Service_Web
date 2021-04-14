@@ -2,7 +2,6 @@
 
 ### Rendu de projet sur le module de WebServices 
 ### EPSI B3 DEV GROUPE 2 2021
-### Pour Mr.Couraud Julien
 
 # Membres du groupes : 
 - Jordan Leston 
@@ -14,3 +13,4 @@
 2. cd 'projet'
 3. meteor npm install ou npm install 
 4. meteor
+```
