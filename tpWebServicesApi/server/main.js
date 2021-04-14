@@ -8,11 +8,13 @@ Meteor.startup(() => {});
 
 const Like = new Mongo.Collection('like');
 
+let baseurl = SERVER_CONFIG.themoviedb_api_config.base_url;
+let apikey = SERVER_CONFIG.themoviedb_api_config.api_key;
+let language = SERVER_CONFIG.themoviedb_api_config.language;
+
+const moviesSearch = baseurl + 'search/movie?api_key=' + apikey + '&language=' + language;
 
 WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
-  let baseurl = SERVER_CONFIG.themoviedb_api_config.base_url;
-  let apikey = SERVER_CONFIG.themoviedb_api_config.api_key;
-  let language = SERVER_CONFIG.themoviedb_api_config.language;
   HTTP.call(
     'GET', 
     baseurl + 'discover/movie?api_key=' + apikey + '&language=' + language,
@@ -31,6 +33,34 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
   )
 });  
 
+// Recherche film ? voir aussi main côté client
+
+WebApp.connectHandlers.use('/api/search', (req, res, next) => {
+  let urlFinal = moviesSearch;
+  let input = '';
+
+  let check = urlSplit(req.originalUrl);
+  console.log(check);
+
+  input = check[0][1]
+
+  HTTP.call(
+    'GET', 
+    urlFinal + '&query=' + input,
+    {},
+    (error, response) => {
+
+      let retour = response.data;
+      retour.results.forEach(element => {
+        let retourReq = Like.findOne({id: element.id});
+        element.like = retourReq ? retourReq.like : 0;
+      })
+      
+      res.writeHead(200);
+      res.end(JSON.stringify(retour));
+    }
+  );
+});
 
   WebApp.connectHandlers.use('/api/like', (req,res, next) => {
     switch(req.method) {
@@ -65,3 +95,11 @@ WebApp.connectHandlers.use('/api/discover/movies', (req, res, next) => {
   }
 
 
+function urlSplit(url) {
+  let urlParams = url.split('?')[1].split('&');
+  let params = [];
+  urlParams.forEach(param => {
+    params.push(param.split('='));
+  });
+  return params;
+}
