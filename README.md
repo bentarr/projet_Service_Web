@@ -3,6 +3,12 @@
 ### Rendu de projet sur le module de WebServices 
 ### EPSI B3 DEV GROUPE 2 2021
 
+# Fonctions rajoutées : 
+- Fonction de Like pour les films 
+- Fonction de recherche par titre des films
+- Fonction de recherche par genre des films
+- Fonction d'affichage des films les plus populaires
+
 # Membres du groupes : 
 - Jordan Leston 
 - Paul Bénétier
