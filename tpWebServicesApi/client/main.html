@@ -1,9 +1,6 @@
 <head>
-  <title>tpServicesWebApi</title>
-</head>
 
-<body>
-  {{> home}}
+  <title>WebServices Projet EPSI Bachelor 3 </title>
 
   <!-- Font Awesome -->
   <link
@@ -20,33 +17,59 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
     rel="stylesheet"
   />
+
+</head>
+
+<body>
+
+  <div >
+    <h1 style="justify-content: center;
+    display: flex;">Projet appel API WebServices [EPSI]</h1>
+    <hr class="my-4">
+    <p style="justify-content: center;
+    display: flex;">Utilisation de l'api the movie DB et rajout de fonctionnalités de filtrage.</p>
+  </div>
+  
+
   <!-- MDB -->
   <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
-  > 
+    type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"> 
   </script>
-  
+
+    {{> home}}
+
 </body>
 
 <template name="home">
-
-  <h1>Liste des films : </h1>
-  <br>
-  <label>TRIER PAR :</label>
-  <button id="popu">Les mieux notés</button>
-  <select id="genres" name="genres">
-    {{#each genres}}
-    <option value="{{id}}">{{name}}</option>
-    {{/each }}
-  </select>
-
-
+  <hr class="my-4">
+  <h1 style="font-size: 40px;">Filtre de recherche :  </h1>
   <div class="container2">
-    <h3>Rechercher par titre : </h3>
-    <input type="text" id="search" aria-label="Search through site content">
+    <div class="nav">
+      <label>Recherche de films par titre : </label>
+      <input type="text" id="search" aria-label="Search through site content">
+    </div>
+
+    <div class="nav">
+      <label>Tri de films par genre : </label>
+      <select class="browser-default custom-select" id="genres" name="genres">
+        <option selected>Choisir un genre</option>
+        {{#each genres}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each }}
+      </select>
+    </div>
+
+    <div class="nav">
+      <label>Les films les plus populaires : </label>
+      <button id="popu" type="button" class="btn btn-outline-info waves-effect"><i class="fas fa-star pr-2" aria-hidden="true"></i>Films mieux notés</button>
+
+    </div>
+
+    <div class="list-film">
+      <h1 style="font-size: 40px;">Liste des films :  </h1>
+    </div>
+    
   </div>
-  
 
   {{#each movies}}
   <div class="container">

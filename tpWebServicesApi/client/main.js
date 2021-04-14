@@ -11,7 +11,6 @@ var inputSearch = new ReactiveVar();
 var filtreSearch = new ReactiveVar(false);
 var page = new ReactiveVar(1);
 var date = new ReactiveVar();
-var movies = new ReactiveVar();
 
 
 Template.home.onCreated(function homeOnCreated() {

@@ -47,7 +47,9 @@ WebApp.connectHandlers.use('/api/discover/most_popu', (req, res, next) => {
       insertLikeBdd(retour);
       res.writeHead(200);
       res.end(JSON.stringify(retour))
-});  
+    }
+  )
+  });
 
 // Recherche film ? voir aussi main côté client
 
@@ -91,8 +93,7 @@ WebApp.connectHandlers.use('/api/search', (req, res, next) => {
       default:
         break;
     }
-  )
-});
+  });
 
 //Route pour récupérer les genres
 WebApp.connectHandlers.use('/api/genres', (req, res, next) => {
@@ -176,4 +177,3 @@ function urlSplit(url) {
   });
   return params;
 }
-
