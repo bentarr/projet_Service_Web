@@ -51,15 +51,16 @@ WebApp.connectHandlers.use('/api/discover/most_popu', (req, res, next) => {
   )
   });
 
-// Recherche film ? voir aussi main côté client
-
+// Route pour accéder à la recherche de film
 WebApp.connectHandlers.use('/api/search', (req, res, next) => {
   let urlFinal = moviesSearch;
   let input = '';
 
+  // Ici sur les 3 prochaines lignes on déclare
+  // une variable "check" qui va venir servir de "query" 
+  // (option obligatoire pour la recherche avec l'API)
   let check = urlSplit(req.originalUrl);
   console.log(check);
-
   input = check[0][1]
 
   HTTP.call(
@@ -80,20 +81,6 @@ WebApp.connectHandlers.use('/api/search', (req, res, next) => {
   );
 });
 
-  WebApp.connectHandlers.use('/api/like', (req,res, next) => {
-    switch(req.method) {
-      case 'GET':
-        break;
-      case 'PUT':
-        let idMovie = req.url.split('/')[1];
-        let newMoviesLikes = updateLikeMovie(parseInt(idMovie));
-        res.writeHead(200);
-        res.end(JSON.stringify(newMoviesLikes));
-        break;
-      default:
-        break;
-    }
-  });
 
 //Route pour récupérer les genres
 WebApp.connectHandlers.use('/api/genres', (req, res, next) => {
@@ -127,6 +114,7 @@ WebApp.connectHandlers.use('/api/movie/genre', (req, res, next) => {
   )
 });
 
+//Route pour récupérer la fonction de like
 WebApp.connectHandlers.use('/api/like', (req, res, next) => {
   switch (req.method) {
     case 'GET':
@@ -142,6 +130,8 @@ WebApp.connectHandlers.use('/api/like', (req, res, next) => {
   }
 });
 
+
+//Fonction d'update quand on clique sur le boutton "like"
 function updateLikeMovie(idMovie) {
   let ressource = Like.findOne({ id: idMovie });
   if (ressource) {
@@ -160,6 +150,9 @@ function updateLikeMovie(idMovie) {
   return Like.findOne({ id: idMovie });
 }
 
+//Fonction pour insérer les likes en BDD 
+//Aussi pour garder le nombre de like visible tout le temps
+
 function insertLikeBdd(retour) {
   retour.results.forEach(element => {
     let retourReq = Like.findOne({ id: element.id });
@@ -168,6 +161,11 @@ function insertLikeBdd(retour) {
 }
 
 
+/*
+Fonction permettant le Split de l'url pour venir chercher les informations du main.js
+Marche comme un GET/POST en PHP.
+On retourne à la fin la variable params déclaré dans un tableau
+**/ 
 
 function urlSplit(url) {
   let urlParams = url.split('?')[1].split('&');

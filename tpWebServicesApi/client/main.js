@@ -12,7 +12,7 @@ var filtreSearch = new ReactiveVar(false);
 var page = new ReactiveVar(1);
 var date = new ReactiveVar();
 
-
+// Template pour récupérer l'api movies et genres avec des GET
 Template.home.onCreated(function homeOnCreated() {
   HTTP.call(
     'GET',
@@ -43,6 +43,7 @@ Template.home.helpers({
   }
 });
 
+//Déclaration des ID html et leurs fonctions
 Template.home.events({
   'click #like'(event, instance) {
     const idMovie = event.currentTarget.dataset.id;
@@ -77,7 +78,7 @@ Template.home.events({
   }
 })
 
-
+// Fonction permettant d'afficher les films avec les mots recherchés 
 function allFilmSearch() {
   HTTP.call(
     'GET',
@@ -89,7 +90,7 @@ function allFilmSearch() {
   );
 }
 
-
+// Fonction permettant de POST les likes 
 function updateLikeMovie(idMovie, movies) {
   HTTP.call(
     'PUT',
@@ -106,6 +107,7 @@ function updateLikeMovie(idMovie, movies) {
   )
 }
 
+//Récupération des films les plus populaires
 function getMostPopu() {
   HTTP.call(
     'GET',
@@ -117,6 +119,7 @@ function getMostPopu() {
   )
 }
 
+//Récupération des films par genre
 function getMoviesFromGenre(idGenre) {
   HTTP.call(
     'GET',
